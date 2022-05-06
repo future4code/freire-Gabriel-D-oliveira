@@ -1,0 +1,2 @@
+# Primeiro Projeto Fixação
+Nessa primeira semana aprendemos a usar o terminal e para isso fomos detetives virtuais hahaha, também vimos como usar o git e o github e os seus **processos e códigos complicados** e para finalizar a semana estamos no VScode.   
