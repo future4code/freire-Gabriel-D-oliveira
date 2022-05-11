@@ -35,13 +35,12 @@ console.log(frase.toUpperCase().replaceAll("A", "I"), frase.length) //
 //Parte de escrita do código
 
 //1.Questão
-/*
+
 const nomeUsuario = prompt("Boa tarde, qual é o seu nome?");
 
 const emailUsuario = prompt("Favor também inserir o seu e-mail");
 
 console.log(`O e-mail ${emailUsuario} foi cadastrado com sucesso. Seja bem-vinda(o), ${nomeUsuario}!`);
-*/
 
 //2.Questão
 
