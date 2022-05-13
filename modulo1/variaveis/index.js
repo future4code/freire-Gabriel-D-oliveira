@@ -31,7 +31,7 @@ let t = prompt("Quanto você recebe por dia?") // Declara a variável "t" como u
 alert(`Voce recebe ${t/p} por hora`) // Cria um alerta indicando o salário por hora.
 
 Sugiro a troca da variável "p" por "horasTrabalhadasDia" e a "t" por "remuneracaoDia"
-*/
+
 
 // Escrita de códigos
 
@@ -90,7 +90,16 @@ console.log("A soma do primeiro número com o segundo é", somaDigitos)
 
 multiplicacaoDigitos = Number(digitoUm)*Number(digitoDois)
 console.log("A multiplicação do primeiro número pelo segundo é", multiplicacaoDigitos)
+*/
 
 
+let textoDoUsuario = prompt("Insira um texto");
+
+const outraFuncao = function(texto) {
+	return texto.toLowerCase().includes("cenoura")
+}
+
+const resposta = outraFuncao(textoDoUsuario)
+console.log(resposta)
 
 
