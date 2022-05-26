@@ -108,6 +108,8 @@ div:last-child {
 
 table {
     width: 60%;
+    /* text-align: center;
+    margin: auto; */
 }
 
 td button {
@@ -145,4 +147,12 @@ td button {
 td img {
     width: 60px;
     height: 60px;
+}
+
+td button:hover {
+    background-color: #b49409
+}
+
+td button:active {
+    color: white;
 }
