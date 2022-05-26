@@ -89,10 +89,14 @@ div img {
 a {
     display: block;
     position: absolute;
-    bottom: 50px;
+    bottom: 20px;
     width: 100%;
     margin: auto 0;
 }
+
+/* div > p{
+    display: block;
+} */
 
 /**
   *
