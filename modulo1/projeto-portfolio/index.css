@@ -1,0 +1,69 @@
+/* Estilização geral */
+
+* {
+    margin: 0;
+    padding: 0;
+     
+}
+
+.cabecalho-estilizacao {
+    background-color: rgb(0, 123, 255);
+    color: white;
+    text-align: center;
+    height: 120px;
+    width: 100;
+}
+
+h1 {
+    padding-top: 20px;
+}
+
+h3 {
+    padding-top: 20px;
+}
+
+h4 {
+    text-align: center;
+    display: inline;
+    padding: 20px 0px 0px ;
+}
+
+a {
+    color: white;
+
+}
+
+/* Estilização Home */
+
+button {
+    background-color:white;
+    color: rgb(0, 123, 255);
+    width: 72px;
+    height: 16px;
+    position: absolute;
+    top: 30px;
+    right: 70px;
+    border: hidden;
+    
+}
+
+button:hover {
+    background-color:rgb(0, 123, 255);
+    color: white;
+    border: solid 2px white;
+
+}
+
+.separacao-corpo {
+    border: solid 2px rgb(161, 9, 174);
+    height: 120px;
+    margin: 60px 20px;
+    background-color: rgb(0, 123, 255);
+    color: white;
+}
+
+il {
+     display: block;
+     padding: 1px;
+}
+

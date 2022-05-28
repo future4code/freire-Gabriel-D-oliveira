@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h4 {
+    padding-bottom: 40px;
+    }
+
+.cabecalho-projeto-revisaoJs {
+    background-color: yellow;
+    color: black;
+    text-align: center;
+    height: 120px;
+    padding-top: 40px;
+    border-bottom: solid 2px black;
+    width: 100%;
+}
+
+.divisao-pag-projetos {
+    text-align: center;
+    background-color: rgb(53, 51, 51);
+    border-bottom: solid 2px yellow;
+    padding: 32px 0px 44px 0px;
+    color: yellow;
+}
+
+img {
+    width: 60%;
+    height: 60%;
+    
+}
+
+#ajuste-tamanho{
+    width: 60px;
+    height: 60px;
+    padding-top: 10px;
+}
+
+p{
+    padding-bottom: 40px;
+}
+
+il {
+        display: block;
+           
+}
+   
+.sem-borda {
+    border-width: 0px;
+    border: white;
+}
