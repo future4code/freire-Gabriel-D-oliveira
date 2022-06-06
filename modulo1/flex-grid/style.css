@@ -1,0 +1,116 @@
+/* Confeitaria */
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    display: flex;
+    background-color: mediumvioletred;
+    justify-content: space-between;
+    height: 60px;
+}
+
+.container-left{
+    display: flex;
+    justify-content: space-between;
+    column-gap: 24px;
+    margin: auto 0;
+    margin-left: 20px;
+}
+
+div > button {
+    margin: 20px;
+    width: 60px;
+}
+
+.imagem-bolinho{
+    width: 20px;
+    height: 20px;
+    
+}
+
+/* Menu e main */
+.container-middle {
+    display: flex;
+    height: 84vh;
+    width: 90vw;
+}
+
+aside   {
+    background-color: #f2d0e0;
+    width: 22vw;
+    flex-grow: 1;
+}
+
+main {
+    background-color:white;
+    /* height: auto; */
+    flex-grow: 3;
+}
+
+aside > div {
+    display: flex;
+    row-gap: 20px;
+    
+}
+
+.menu-lateral {
+    padding: 12px;
+
+}
+
+.imagens{
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+}
+
+.imagens-seta{
+    width: 20px;
+    height: 20px;
+    margin-left: 6%;
+}
+
+.escrita-produtos {
+    text-align: left;
+    padding: 8px;
+}
+
+.bolo-bonito {
+    width: 200px;
+    height: 200px;
+    padding: 24x;
+}
+
+.container-main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: left;
+    text-align: center; 
+}
+main > div {
+    margin: 0px 8px;
+    padding: 0px 6px;
+    box-shadow: 10px 5px 5px darkgray;
+}
+
+div > p {
+    padding: 2px;
+}
+
+h3{
+    padding: 2px;
+}
+/* footer */
+
+footer {
+    background-color: mediumvioletred;
+    height: 16px;
+    text-align: center;
+    padding: 20px 0px;
+}
+
+
