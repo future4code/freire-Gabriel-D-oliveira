@@ -48,6 +48,7 @@ class Post extends React.Component {
     numeroComentarios: 0
   }
 
+
   onClickCurtida = () => {
     let novoNumeroCurtidas
     if (this.state.curtido) {
@@ -76,6 +77,9 @@ class Post extends React.Component {
   }
 
   render() {
+
+    console.log(this.props.fotoUsuario)
+    
     let iconeCurtida
 
     if (this.state.curtido) {
