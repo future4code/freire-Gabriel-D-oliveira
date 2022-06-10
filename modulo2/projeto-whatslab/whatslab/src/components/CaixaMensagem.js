@@ -8,32 +8,31 @@ const EnviarMensagem = styled.div`
   margin-bottom: 16px;
   width: 600px;
 `;
-const InputUsuario = styled.input `
-width: 15%;
-border-radius: 5px;
-border:none;
-padding-left: 5px;
-`
-const InputMensagem = styled.input `
-width: 60%;
-border-radius: 5px;
-border:none;
-padding-left: 5px;
-`
-const StyleButton = styled.button `
-width: 15%;
-border-radius: 5px;
-border:none;
-`
-const StyleResposta = styled.p `
-background-color: white;
-width: 80%;
-height: 30px;
-margin-left: 18px;
-padding-left: 5px;
-border-radius: 5px;
-`
-
+const InputUsuario = styled.input`
+  width: 15%;
+  border-radius: 5px;
+  border: none;
+  padding-left: 5px;
+`;
+const InputMensagem = styled.input`
+  width: 60%;
+  border-radius: 5px;
+  border: none;
+  padding-left: 5px;
+`;
+const StyleButton = styled.button`
+  width: 15%;
+  border-radius: 5px;
+  border: none;
+`;
+const StyleResposta = styled.p`
+  background-color: white;
+  width: 80%;
+  height: 30px;
+  margin-left: 18px;
+  padding-left: 5px;
+  border-radius: 5px;
+`;
 
 class CaixaMensagem extends React.Component {
   state = {
@@ -99,5 +98,5 @@ class CaixaMensagem extends React.Component {
       </div>
     );
   }
-};
+}
 export default CaixaMensagem;
