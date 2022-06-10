@@ -9,34 +9,46 @@ const MainContainer = styled.div`
   align-items: center;
 `;
 
-const ContainerNewPost = styled.input`
+const ContainerNewPost = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 300px;
   margin: 10px 0px;
-  border: none;
-  border-bottom: 1px solid gray;
+  border: 1px solid black;
+  
+`;
+
+const InputStyle = styled.input`
+  width: 200px;
+  height: 25px;
+  margin: 10px 0px;
+  border: 1px solid black;
 `;
 
 const PostButton = styled.button`
-margin: 10px 0px;
-`
+  margin: 10px 0px;
+  height: 20px;
+`;
 
 class App extends React.Component {
   state = {
     posts: [
       {
         nomeUsuario: "paulinha",
-        fotoUsuario: "https://picsum.photos/50/51",
-        fotoPost: "https://picsum.photos/200/150",
+        fotoUsuario: "https://picsum.photos/50/50?random=1",
+        fotoPost: "https://picsum.photos/200/150?random=1",
       },
       {
         nomeUsuario: "Lukas Silva",
-        fotoUsuario: "https://picsum.photos/50/53",
-        fotoPost: "https://picsum.photos/200/155",
+        fotoUsuario: "https://picsum.photos/50/50?random=3",
+        fotoPost: "https://picsum.photos/200/150?random=2",
       },
       {
         nomeUsuario: "Marina Santos",
-        fotoUsuario: "https://picsum.photos/50/55",
-        fotoPost: "https://picsum.photos/200/154",
+        fotoUsuario: "https://picsum.photos/50/50?random=10",
+        fotoPost: "https://picsum.photos/200/150?random=3",
       },
     ],
 
@@ -51,15 +63,16 @@ class App extends React.Component {
       fotoUsuario: this.state.valorFotoUsuario,
       fotoPost: this.state.valorFotoPost,
     };
+
+    const todosOsPosts = [...this.state.posts, novoPost];
+
+    this.setState({ posts: todosOsPosts });
+
     this.setState({
       valorNomeUsuario: "",
       valorFotoUsuario: "",
       valorFotoPost: "",
     });
-
-    const todosOsPosts = [...this.state.posts, novoPost];
-
-    this.setState({ posts: todosOsPosts });
   };
 
   onChangeFotoUsuario = (event) => {
@@ -88,23 +101,25 @@ class App extends React.Component {
 
     return (
       <MainContainer>
-        <ContainerNewPost
-          value={this.state.valorNomeUsuario}
-          onChange={this.onChangeNomeUsuario}
-          placeholder="Nome"
-        />
-        <ContainerNewPost
-          value={this.state.valorFotoUsuario}
-          onChange={this.onChangeFotoUsuario}
-          placeholder="Foto do Usuário"
-        />
-        <ContainerNewPost
-          value={this.state.valorFotoPost}
-          onChange={this.onChangeFotoPost}
-          placeholder="Post"
-        />
-        <PostButton onClick={this.adicionaPost}>Postar</PostButton>
-
+        <ContainerNewPost>
+          <h2>Novo post</h2>
+          <InputStyle
+            value={this.state.valorNomeUsuario}
+            onChange={this.onChangeNomeUsuario}
+            placeholder="Nome"
+          />
+          <InputStyle
+            value={this.state.valorFotoUsuario}
+            onChange={this.onChangeFotoUsuario}
+            placeholder="Foto do Usuário"
+          />
+          <InputStyle
+            value={this.state.valorFotoPost}
+            onChange={this.onChangeFotoPost}
+            placeholder="Post"
+          />
+          <PostButton onClick={this.adicionaPost}>Postar</PostButton>
+        </ContainerNewPost>
         {listaPostsUsuarios}
       </MainContainer>
     );
