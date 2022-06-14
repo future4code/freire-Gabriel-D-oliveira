@@ -14,6 +14,11 @@ const ContainerGeral = styled.body`
 
 const AjusteBotao = styled.button`
   margin-top: 20px;
+
+    :hover {
+  background-color: aqua;
+  color: red;
+  }
 `;
 
 export default class App extends React.Component {
@@ -46,8 +51,7 @@ export default class App extends React.Component {
 
   render() {
     let botao;
-    {
-      this.state.etapa >= 4
+    {      this.state.etapa >= 4
         ? (botao = "")
         : (botao = (
             <AjusteBotao onClick={this.irParaProximaEtapa}>
