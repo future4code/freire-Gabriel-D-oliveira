@@ -1,0 +1,70 @@
+/*Exercíco css1
+Juntei todas os comandos de todas as páginass estilizadas em apenas um arquivo.css
+*/
+
+.titulo-loja-cor {
+  color: blue;
+  text-align: center;
+  background-color: aquamarine;
+}
+
+nav {
+  display: block;
+  text-align: center;
+}
+
+a {
+  display: inline-block;
+  color: red;
+  margin: 4px;
+  text-align: center;
+}
+
+ul {
+  color: red;
+}
+
+p {
+  color: purple;
+  text-align: center;
+}
+
+img.imagem-centralizada {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+footer {
+  display: block;
+  text-align: center;
+  margin: 16px;
+}
+
+img.imagem-redes {
+  display: inline-block;
+  margin: 16px;
+}
+
+h2 {
+  color: blue;
+}
+
+table{
+    margin:auto;
+}
+
+td {
+  border: solid;
+  text-align: center;
+}
+
+#botao-colorido {
+  background-color: aqua;
+}
+
+
+#titulo-controle-estoque{
+    color: blue;
+    text-align: center;
+}
