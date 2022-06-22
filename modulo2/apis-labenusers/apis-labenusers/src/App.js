@@ -1,6 +1,14 @@
 import React from 'react';
 import RegisterUser from './Components/RegisterUser';
 import UserList from './Components/UserList';
+import styled from 'styled-components';
+
+const BotaoRenderPage = styled.div `
+display: flex;
+justify-content: center;
+margin: 6px 0px;
+
+`
 
 
 class App extends React.Component {
@@ -25,10 +33,12 @@ renderPage = () => {
 render (){
 
   return (
-    <div>
+    <div> 
+      <BotaoRenderPage>     
       {this.state.tela >= 2 && (<button onClick={this.nextPage}>Trocar de tela</button>) }
-      <br/>
+      </BotaoRenderPage>
       {this.renderPage()}
+      
       </div>
   )};
 }
