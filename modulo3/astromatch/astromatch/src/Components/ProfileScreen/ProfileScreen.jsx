@@ -1,52 +1,59 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { Header } from "../Header/Header";
 
 const ContainerImage = styled.img`
   width: 160px;
   height: 200px;
 `;
 const ContainerProfile = styled.div`
+  position: absolute;
+  left: 25%;
+  top: 10%;
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
   border: 2px solid black;
-  width: 80%;
+  width: 35%;
 `;
 
-export const ProfileScreen = () => {
+export const ProfileScreen = (props) => {
   const [profile, setProfile] = useState({});
-  const [chosenProfile, setChosenProfile] = useState({});
-  const [click, setClick] = useState();
+  // const [chosenProfile, setChosenProfile] = useState({});
+  
 
   const urlGetProfile =
-    "https://us-central1-missao-newton.cloudfunctions.net/astroMatch/Gabriel-D-oliveira/person";
+    "https://us-central1-missao-newton.cloudfunctions.net/astroMatch/gabriel/person";
   const urlChooseProfile =
-    "https://us-central1-missao-newton.cloudfunctions.net/astroMatch/Gabriel-D-oliveira/choose-person";
+    "https://us-central1-missao-newton.cloudfunctions.net/astroMatch/gabriel/choose-person";
 
   const getProfile = () => {
     axios
       .get(urlGetProfile)
       .then((resposta) => {
         setProfile(resposta.data.profile);
+        console.log(resposta.data.profile);
       })
       .catch((err) => {
         alert(`Erro ao carregar o perfil`);
       });
   };
 
-  const choosePerson = (choice) => {
+  const choosePerson = () => {
     const body = {
       id: profile.id,
-      choice: choice,
+      choice: true,
     };
 
     axios
       .post(urlChooseProfile, body)
 
       .then((resposta) => {
-        setChosenProfile(resposta.data.profile);
+        // setChosenProfile(resposta.data.profile);
+        console.log(profile);
+        console.log(body);
         getProfile();
       })
       .catch((err) => {
@@ -58,17 +65,20 @@ export const ProfileScreen = () => {
     getProfile();
   }, []);
 
-  console.log(profile);
+  
   return (
     <ContainerProfile>
-      <button>Matches</button>
-      <p>{profile.age}</p>
-      <p>{profile.name}</p>
+      <Header
+        changePageToProfile={props.changePageToProfile}
+        changePageToMatches={props.changePageToMatches}
+      />
       <ContainerImage src={profile.photo} alt="foto do perfil dos usuarios" />
-      <p>{profile.bio}</p>
+      <p>
+        {profile.name}, {profile.age} <br /> {profile.bio}
+      </p>
       <div>
-        <button onClick={() => choosePerson(false)}>Reject</button>
-        <button onClick={() => choosePerson(true)}>Aprove</button>
+        <button onClick={() => getProfile()}>Reject</button>
+        <button onClick={() => choosePerson()}>Aprove</button>
       </div>
     </ContainerProfile>
   );
