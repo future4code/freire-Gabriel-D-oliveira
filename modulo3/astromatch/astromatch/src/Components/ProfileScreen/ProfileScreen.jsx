@@ -2,24 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Header } from "../Header/Header";
+import {ContainerImage, ContainerProfile} from './ProfileScreenStyle'
 
-const ContainerImage = styled.img`
-  width: 160px;
-  height: 200px;
-`;
-const ContainerProfile = styled.div`
-  position: absolute;
-  left: 25%;
-  top: 10%;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-  border: 2px solid black;
-  width: 35%;
-`;
 
 export const ProfileScreen = (props) => {
+
   const [profile, setProfile] = useState({});
   // const [chosenProfile, setChosenProfile] = useState({});
   
@@ -74,7 +61,7 @@ export const ProfileScreen = (props) => {
       />
       <ContainerImage src={profile.photo} alt="foto do perfil dos usuarios" />
       <p>
-        {profile.name}, {profile.age} <br /> {profile.bio}
+        {profile.name}, {profile.age} <br/> {profile.bio}
       </p>
       <div>
         <button onClick={() => getProfile()}>Reject</button>
