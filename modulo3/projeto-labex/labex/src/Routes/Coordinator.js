@@ -11,7 +11,15 @@ export const goToApplicationPage = (navigate) => {
 
 }
 
-export const goToAdminPage = (navigate) => {
+export const goToLoginPage = (navigate) => {
     navigate("/login")
 }
 
+export const goToTripDetails = (navigate, id) => {
+    navigate(`/admin/trip/${id}`)
+}
+
+
+export const goToAdminPage = (navigate) => {
+    navigate('/admin/trips/list')
+}

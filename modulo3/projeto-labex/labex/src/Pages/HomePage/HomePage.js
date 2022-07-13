@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { goToListTrips, goToAdminPage, goToApplicationPage } from '../../Routes/Coordinator';
+import { goToListTrips, goToAdminPage, goToApplicationPage, goToLoginPage } from '../../Routes/Coordinator';
 
 
 export const HomePage = () => {
@@ -12,7 +12,7 @@ export const HomePage = () => {
             <h1>Home</h1>
             <button onClick={()=> goToListTrips(navigate)}>Ver lista de viagens</button>
             <button onClick={()=> goToApplicationPage(navigate)}>Candidatar-se para a viagens</button>
-            <button onClick={()=> goToAdminPage(navigate)}>Login</button>
+            <button onClick={()=> goToLoginPage(navigate)}>Login</button>
         </div>
     )
 }

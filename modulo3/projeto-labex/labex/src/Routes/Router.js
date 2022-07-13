@@ -19,7 +19,7 @@ export const Router = () => {
                 <Route path="/trips/application" element={<ApplicationFormPage />} />
                 <Route path="/admin/trips/list" element={<AdminHomePage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/admin/trips/:id" element={<TripDetailsPage />} />
+                <Route path='/admin/trips/:id' element={<TripDetailsPage />} />
                 <Route path="/admin/trips/create" element={<CreateTripPage />} />
 
             </Routes>
