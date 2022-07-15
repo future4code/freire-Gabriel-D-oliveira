@@ -11,7 +11,7 @@ export const useProtectedPages = () => {
 
     if (token === null) {
       alert("Usuário não logado");
-      navigate.push(goToLoginPage(navigate));
+      goToLoginPage(navigate);
     }
   }, [navigate]);
 };

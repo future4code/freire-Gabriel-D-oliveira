@@ -1,40 +1,35 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useRequestData } from "../../Hooks/useRequestData";
+import { urlBase } from "../../Constants/Constants";
+import { useNavigate } from "react-router-dom";
+import { goToApplicationPage } from "../../Routes/Coordinator";
 
 export const ListTripsPage = () => {
-  const [list, setList] = useState([]);
-
-  const getTrips = () => {
-    axios
-      .get(
-        "https://us-central1-labenu-apis.cloudfunctions.net/labeX/Gabriel-D-oliveira/trips"
-      )
-      .then((response) => {
-        console.log(response.data);
-        setList(response.data.trips);
-      })
-      .catch((err) => {
-        console.log(err.data);
-      });
-  };
-
-  useEffect(() => {
-    getTrips();
-  }, []);
+  const [list, getList] = useRequestData(`${urlBase}/trips`, []);
+  const navigate = useNavigate()
 
   console.log(list);
 
-  const trips = list.map((trips) => {
+  const trips = list.map((t) => {
     return (
-      <div key={trips.id} value>
-        <p>{trips.name}</p>
-        <p>{trips.description}</p>
-        <p>{trips.date}</p>
-        <p>{trips.planet}</p>
-        <p>{trips.durationInDays}</p>
+      <div key={t.id} value={t.id}>
+        <p>{t.name}</p>
+        <p>{t.description}</p>
+        <p>{t.date}</p>
+        <p>{t.planet}</p>
+        <p>{t.durationInDays}</p>
       </div>
     );
   });
 
-  return <div>{trips}</div>;
+  return (
+    <div>
+      <button onClick={() => goToApplicationPage(navigate)}>
+        Candidatar-se para a viagens
+      </button>
+      <hr />
+      {trips}
+    </div>
+  );
 };

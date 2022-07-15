@@ -1,40 +1,50 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useProtectedPages } from "../../Hooks/customHooks";
-
+import { useNavigate, useParams } from "react-router-dom";
+import { auth } from "../../Constants/Constants";
+import { useProtectedPages } from "../../Hooks/useProtectedPages";
+import { useRequestData } from "../../Hooks/useRequestData";
+import { urlBase, headersAxios } from "../../Constants/Constants";
 
 export const TripDetailsPage = () => {
- 
-useProtectedPages()
+  useProtectedPages();
+  const {id} = useParams();
+  console.log(id);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  const [allTrips, getAllTrips] = useRequestData(`${urlBase}/trips`, []);
+
+  console.log(allTrips);
+
+    useEffect(() => {
     axios
-      .get(
-        "https://us-central1-labenu-apis.cloudfunctions.net/labeX/Gabriel-D-oliveira/trip/:id",
-        {
-          headers: {
-            auth: token,
-          },
-        }
-      )
+      .get(`${urlBase}/trip/${id}`, headersAxios)
       .then((response) => {
+
         console.log(response.data);
       })
       .catch((err) => {
         console.log(err.data);
       });
-  }, []);
+  },[])
+
+  const tripsDetails = allTrips.map((t) => {
+    return (
+      <div key={t.id} value={t.id}>
+        <p>{t.name}</p>
+        <p>{t.description}</p>
+        <p>{t.date}</p>
+        <p>{t.planet}</p>
+        <p>{t.durationInDays}</p>
+        <hr/>
+
+      </div>
+    );
+  });
 
   return (
     <div>
-      <ul>
-        <li>Details of Trip 1</li>
-        <li>Details of Trip 2</li>
-        <li>Details of Trip 3</li>
-        <li>Details of Trip 4</li>
-      </ul>
+      {tripsDetails}
+      
     </div>
   );
 };

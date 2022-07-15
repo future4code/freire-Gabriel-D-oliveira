@@ -1,34 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { goToAdminPage, goToLoginPage, goToTripDetails } from "../../Routes/Coordinator";
+import { goToAdminPage, goToHomePage } from "../../Routes/Coordinator";
+import { useForm } from "../../Hooks/useForm";
 
 export const LoginPage = () => {
-  const [inputUser, setInputUser] = useState("");
-  const [inputPassword, setInputPassword] = useState("");
+  const { form, onChange } = useForm({ email: "", password: "" });
 
   const navigate = useNavigate();
 
-  const handleInputUser = (event) => {
-    setInputUser(event.target.value);
-  };
-  const handleInputPassword = (event) => {
-    setInputPassword(event.target.value);
-  };
+  const onSubmitLogin = (event) => {
+    event.preventDefault();
 
-  const onSubmitLogin = () => {
-    const body = {
-      email: inputUser,
-      password: inputPassword,
-    };
     axios
       .post(
         "https://us-central1-labenu-apis.cloudfunctions.net/labeX/Gabriel-D-oliveira/login",
-        body
+        form
       )
       .then((response) => {
+        console.log(response.data.token);
         localStorage.setItem("token", response.data.token);
-        
+        goToAdminPage(navigate);
       })
       .catch((err) => {
         console.log(`Deu errado: ${err.data}`);
@@ -38,20 +30,29 @@ export const LoginPage = () => {
   return (
     <div>
       <p>Login</p>
-      <input
-        type="text"
-        placeholder="User"
-        onChange={handleInputUser}
-        value={inputUser}
-      />
-      <input
-        type="text"
-        placeholder="Passaword"
-        onChange={handleInputPassword}
-        value={inputPassword}
-      />
-      <hr />
-      <button onClick={onSubmitLogin}>Entrar</button>
+      <form onSubmit={onSubmitLogin}>
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
+          onChange={onChange}
+          value={form.email}
+          required
+        />
+        <input
+          name="password"
+          type="text"
+          placeholder="Password"
+          onChange={onChange}
+          value={form.password}
+          pattern={"^.{4,}"}
+          title="Sua senha deve conter no mínimo 4 caracteres"
+          required
+        />
+        <hr />
+        <button>Entrar</button>
+      </form>
+      <button onClick={() => goToHomePage(navigate)}>Voltar</button>
     </div>
   );
 };
