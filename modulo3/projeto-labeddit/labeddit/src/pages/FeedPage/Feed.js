@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from "react";
+import { useProtectedPage } from "../../hooks/useProtectedPage";
+import { getPosts } from "../../services/posts";
 
+export const Feed = () => {
+  useProtectedPage();
 
-export const Feed =()=> {
+  
 
-    return(
-        <div>
-            Feed
-        </div>
-    )
-}
+  useEffect(()=>{
+    getPosts()
+  },[])
+
+  return (
+  <div>
+    Feed</div>)
+};

@@ -14,7 +14,7 @@ export const Router = () => {
         <Route path={"/register"} element={<Register />} />
         <Route path={"/feed"} element={<Feed />} />
         <Route path={"/feed/:post"} element={<Post />} />
-        <Route path={"*"} element={<Error />} />
+        <Route path={""} element={<Error />} />
       </Routes>
     </BrowserRouter>
   );
