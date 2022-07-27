@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { goToFeedPage } from "../../routes/Coordinator";
 
 export const RegisterForm = () => {
-  const [form, onChange, clearInput] = useForm({ username: "", email: "", password: ""});
+  const {form, onChange, clearInput} = useForm({ username: "", email: "", password: ""});
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
 

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { goToFeedPage } from "../../routes/Coordinator";
 
 export const LoginForm = () => {
-  const [form, onChange, clearInput] = useForm({ email: "", password: "" });
+  const {form, onChange, clearInput} = useForm({ email: "", password: "" });
 
   const navigate = useNavigate();
 
