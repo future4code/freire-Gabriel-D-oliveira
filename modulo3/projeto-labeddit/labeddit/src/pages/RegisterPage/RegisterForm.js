@@ -4,17 +4,13 @@ import { useForm } from "../../hooks/useForm";
 import { BASE_URL } from "../../constants/urls";
 import { useNavigate } from "react-router-dom";
 import { goToFeedPage } from "../../routes/Coordinator";
+import { InputStyle, ButtonGradient, ContainerFormLogin, ContainerCheckBox } from "./RegisterStyle";
 
 export const RegisterForm = () => {
   const {form, onChange, clearInput} = useForm({ username: "", email: "", password: ""});
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
-
-  const onSubmitRegister = (e) => {
-    e.preventDefault();
-    signup();
-  };
-
+  
   const handleonChangeCheckBox = () => {
     setChecked(!checked);
   };
@@ -23,23 +19,28 @@ export const RegisterForm = () => {
 
   const signup = () => {
     axios
-      .post(`${BASE_URL}/users/signup`, form)
+    .post(`${BASE_URL}/users/signup`, form)
       .then((res) => {
         localStorage.setItem("token", res.data.token)
         goToFeedPage(navigate);
       })
-      .catach((err) => {
+      .catch((err) => {
         alert("Erro ao cadastrar o usuário:" );
       });
-
+      
+    };
+    
+      const onSubmitRegister = (e) => {
+        e.preventDefault();
+        signup();
+      };
     ;
-  };
 
   console.log(form)
 
   return (
-    <form onSubmit={onSubmitRegister}>
-      <input
+    <ContainerFormLogin onSubmit={onSubmitRegister}>
+      <InputStyle
         name={"username"}
         value={form.username}
         onChange={onChange}
@@ -47,7 +48,7 @@ export const RegisterForm = () => {
         placeholder="Usuário"
         required
       />
-      <input
+      <InputStyle
         type="email"
         name={"email"}
         value={form.email}
@@ -56,7 +57,7 @@ export const RegisterForm = () => {
         label="E-mail"
         required
       />
-      <input
+      <InputStyle
         type="password"
         name={"password"}
         value={form.password}
@@ -67,16 +68,16 @@ export const RegisterForm = () => {
         max={30}
         required
       />
-      <label>
+      <ContainerCheckBox>
         <input
           type="checkbox"
           checked={checked}
           onChange={handleonChangeCheckBox}
           required
         />
-        "Concordo com os termos e licensa do aplicativos"
-      </label>
-      <button type="submit">Registrar</button>
-    </form>
+        Concordo com os termos e licensa do aplicativo
+      </ContainerCheckBox>
+      <ButtonGradient type="submit">Registrar</ButtonGradient>
+    </ContainerFormLogin>
   );
 };

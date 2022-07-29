@@ -1,19 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useForm } from "../../hooks/useForm";
 import { BASE_URL } from "../../constants/urls";
 import { useNavigate } from "react-router-dom";
 import { goToFeedPage } from "../../routes/Coordinator";
+import { ButtonGradient, ContainerFormLogin, InputStyle } from "./LoginStyle";
 
 export const LoginForm = () => {
-  const {form, onChange, clearInput} = useForm({ email: "", password: "" });
+  const { form, onChange, clearInput } = useForm({ email: "", password: "" });
 
   const navigate = useNavigate();
-
-  const onSubmitLogin = (e) => {
-    e.preventDefault();
-    login();
-  };
 
   const login = () => {
     axios
@@ -30,26 +26,35 @@ export const LoginForm = () => {
     clearInput();
   };
 
+  const onSubmitLogin = (e) => {
+    e.preventDefault();
+    login();
+  };
+
+
   return (
-    <form onSubmit={onSubmitLogin}>
-      <input
+    <ContainerFormLogin onSubmit={onSubmitLogin}>
+      <InputStyle
         name={"email"}
+        placeholder="Email"
         value={form.email}
         onChange={onChange}
         label="E-mail"
         required
       />
-      <input
+      <InputStyle
         type="password"
+        placeholder="Senha"
         name={"password"}
         value={form.password}
         onChange={onChange}
         label="Senha"
-        margin="normal"
+        min={8}
+        max={30}
         required
       />
 
-      <button type="submit">Logar</button>
-    </form>
+      <ButtonGradient type="submit">Logar</ButtonGradient>
+    </ContainerFormLogin>
   );
 };
