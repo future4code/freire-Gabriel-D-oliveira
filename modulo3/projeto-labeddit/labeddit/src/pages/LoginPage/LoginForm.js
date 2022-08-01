@@ -20,7 +20,7 @@ export const LoginForm = () => {
         goToFeedPage(navigate);
       })
       .catch((err) => {
-        console.log(err.data.message);
+        console.log(err.data);
       });
 
     clearInput();

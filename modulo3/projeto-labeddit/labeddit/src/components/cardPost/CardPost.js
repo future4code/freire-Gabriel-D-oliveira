@@ -3,6 +3,9 @@ import { useForm } from "../../hooks/useForm";
 import axios from "axios";
 import { BASE_URL } from "../../constants/urls";
 import { GlobalStateContext } from "../../context/GlobalStateContext";
+import { InputPost, ContainerFormPost, ButtonGradient, InputTitlePost } from "./CardPostStyle";
+import { Button } from "@material-ui/core";
+
 
 export const CardPost = () => {
   const  {form, onChange, clearInput} = useForm({ title: "", body: ""});
@@ -18,39 +21,37 @@ const createPost = () => {
   .then((res) => {
     console.log(res.data);
     clearInput();
+    getPost();
   })
   .catch((err) => {
-    console.log(err.response.data);
+    console.log(err.response);
   });
-  getPost();
-  
+    
 };
 
 const onSubmitPost = (e) => {
   e.preventDefault();
   createPost();
 };
-  console.log(form);
-  console.log(auth);
   
 
   return (
-    <form onSubmit={onSubmitPost}>
-      <input
+    <ContainerFormPost onSubmit={onSubmitPost}>
+      <InputTitlePost
         name={"title"}
         value={form.title}
         onChange={onChange}
         placeholder="Título do Post"
         required
       />
-      <input
+      <InputPost
         name={"body"}
         value={form.body}
         onChange={onChange}
         placeholder="Escreva seu post..."
         required
       />
-      <button type="submit">Postar</button>
-    </form>
+      <ButtonGradient type="submit">Postar</ButtonGradient>
+    </ContainerFormPost>
   );
 };

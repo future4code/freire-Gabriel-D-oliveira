@@ -6,6 +6,12 @@ export const LogoContainer = styled.img`
   left: 8vw;
 `;
 
+export const ButtonReturn = styled.img`
+  position: relative;
+  left: -14vw;
+
+`
+
 export const ContainerHeader = styled.div`
   display: flex;
   margin-top: 4vh;
@@ -18,7 +24,7 @@ export const ContainerHeader = styled.div`
 
 export const TextClicker = styled.p`
   position: relative;
-  left: 30vw;
+  left: 20vw;
   color: #4088cb;
   font-family: "Noto Sans";
   font-style: normal;

@@ -11,7 +11,7 @@ export const RegisterForm = () => {
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
   
-  const handleonChangeCheckBox = () => {
+  const handleOnChangeCheckBox = () => {
     setChecked(!checked);
   };
 
@@ -72,7 +72,7 @@ export const RegisterForm = () => {
         <input
           type="checkbox"
           checked={checked}
-          onChange={handleonChangeCheckBox}
+          onChange={handleOnChangeCheckBox}
           required
         />
         Concordo com os termos e licensa do aplicativo
