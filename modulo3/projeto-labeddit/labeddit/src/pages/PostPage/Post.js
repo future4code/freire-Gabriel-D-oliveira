@@ -13,7 +13,7 @@ import {
   ContainerFormComment,
   InputComment,
   ArrowUpStyle,
-  ArrowDownStyle
+  ArrowDownStyle,
 } from "./PostStyle";
 import up from "../../assets/img/Vector_up.svg";
 import down from "../../assets/img/Vector_down.svg";
@@ -57,7 +57,7 @@ export const Post = () => {
                 }}
               />
 
-              <p>{p.voteSum}</p>
+              {p.voteSum ? <p>{p.voteSum}</p> : <p>0</p>}
               <ArrowDownStyle
                 src={down}
                 onClick={() => {
@@ -65,7 +65,7 @@ export const Post = () => {
                 }}
               />
 
-              <p>{p.commentCount}</p>
+              {p.commentCount ? <p>{p.commentCount}</p> : <p>0</p>}
             </ContainerButtons>
           </BoxPost>
         );
@@ -91,9 +91,9 @@ export const Post = () => {
               }}
             />
 
-            <p>{c.voteSum}</p>
+            {c.voteSum ? <p>{c.voteSum}</p> : <p>0</p>}
             <img
-              src={up}
+              src={down}
               onClick={() => {
                 changeCommentVote(c.id);
               }}

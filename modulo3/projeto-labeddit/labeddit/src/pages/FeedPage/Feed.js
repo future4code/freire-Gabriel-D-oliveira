@@ -6,7 +6,12 @@ import { CardPost } from "../../components/cardPost/CardPost";
 import { useNavigate } from "react-router-dom";
 import { goToPostPage } from "../../routes/Coordinator";
 import { Header } from "../../components/header/Header";
-import { BoxPost, ContainerButtons, LineDivision, PrimaryTextContent } from "./FeedStyle";
+import {
+  BoxPost,
+  ContainerButtons,
+  LineDivision,
+  PrimaryTextContent,
+} from "./FeedStyle";
 import up from "../../assets/img/Vector_up.svg";
 import down from "../../assets/img/Vector_down.svg";
 
@@ -28,7 +33,10 @@ export const Feed = () => {
     posts.map((p) => {
       return (
         <BoxPost>
-          <PrimaryTextContent key={p.id} onClick={() => goToPostPage(navigate, p.id)}>
+          <PrimaryTextContent
+            key={p.id}
+            onClick={() => goToPostPage(navigate, p.id)}
+          >
             <p>
               <b>Enviado por: {p.username}</b>
             </p>
@@ -52,22 +60,25 @@ export const Feed = () => {
                 }}
               />
             )}
-            <p>{p.voteSum}</p>
+            {p.voteSum ? <p>{p.voteSum}</p> : <p>0</p>}
             {voted ? (
-              <img src={down} alt="seta para baixo"
+              <img
+                src={down}
+                alt="seta para baixo"
                 onClick={() => {
                   changePostVote(p.id);
                 }}
               />
-               
             ) : (
-              <img src={down} alt="seta para baixo"
+              <img
+                src={down}
+                alt="seta para baixo"
                 onClick={() => {
                   deletePostVote(p.id);
                 }}
               />
             )}
-            {p.commentCount ? <p>{p.commentCount} </p> : <p> 0 </p>}
+            {p.commentCount ? <p>{p.commentCount}</p> : <p>0</p>}
           </ContainerButtons>
         </BoxPost>
       );
