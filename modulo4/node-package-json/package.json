@@ -1,0 +1,15 @@
+{
+  "name": "aula-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./index.js"
+  },
+  "author": "Gabriel Martins",
+  "license": "ISC",
+  "dependencies": {
+    "styled-components": "^5.3.5"
+  }
+}
