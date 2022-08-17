@@ -103,26 +103,21 @@ app.post("/chores", (req, res) => {
 app.put("/chores/:userId/:id/status", (req, res) => {
   const userId = req.params.userId;
   const id = req.params.id;
-  const changeChores = arrayChores;
-
-  if (userId && id) {
-    changeChores.map((chore) => {
-      if (chore.userId.toString() === userId && chore.id.toString() === id) {
-        res.status(200).send({
-          id: chore.userId,
-          userId: chore.userId,
-          title: chore.title,
-          completed: !chore.completed,
-        });
-      // } else {
-      //   // res.status(200).send({
-      //   //   id: chore.userId,
-      //   //   userId: chore.userId,
-      //   //   title: chore.title,
-      //   //   completed: chore.completed,
-      //   });
-      }
+  const changeChores = arrayChores
+    .filter((chore) => {
+      return chore.userId.toString() === userId && chore.id.toString() === id;
+    })
+    .map((chore) => {
+      return {
+        id: chore.id,
+        userId: chore.userId,
+        title: chore.title,
+        completed: !chore.completed,
+      };
     });
+
+  if (changeChores) {
+    res.status(200).send(changeChores);
   } else {
     res.send(
       "Favor verificar se os parametros foram inseridos corretamente: id da tarefa e o id do usuário"
@@ -130,11 +125,34 @@ app.put("/chores/:userId/:id/status", (req, res) => {
   }
 });
 
-//   if (changeChores) {
-//     res.status(200).send(changeChores);
-//   } else {
-//     res.send(
-//       "Favor verificar se os parametros foram passados corretamente: id da tarefa e o id do usuário"
-//     );
-//   }
-// });
+// Exercicio 7
+
+app.delete("/chores/:userId/:id", (req, res) => {
+  const userId = req.params.userId;
+  const id = req.params.id;
+  const listaTarefa = arrayChores;
+
+  for (let tarefa of listaTarefa) {
+    if (tarefa.id.toString() === id && tarefa.userId.toString() === userId) {
+      const index: number = listaTarefa.indexOf(tarefa);
+      listaTarefa.splice(index, 1);
+    } else {
+      listaTarefa;
+    }
+  }
+  res.status(200).send(listaTarefa);
+});
+
+// Exercicio 8
+
+app.get("/chores/:userId", (req, res) => {
+  const userId = req.params.userId;
+  const arrayFilteredUserId: toDoList[] = arrayChores.filter((c) => {
+    return c.userId === Number(userId);
+  });
+  if (arrayFilteredUserId) {
+    res.status(200).send(arrayFilteredUserId);
+  } else {
+    res.send("Favor verificar se o Id do usuário estã correto ");
+  }
+});
