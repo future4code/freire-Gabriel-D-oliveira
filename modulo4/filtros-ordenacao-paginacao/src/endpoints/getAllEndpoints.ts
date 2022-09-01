@@ -24,15 +24,15 @@ export async function getAllEndpoints(
       order = "desc";
     }
 
-    if (!type || type =="") {
-      type = "all";
+    if (!type) {
+    throw new Error ("Favor inserir o parametro type");
     }
 
     const users = await selectAllConditions(page, sort, order, type, name);
 
-   //  if (type && users.length < 1) {
-   //    throw new Error("No users found");
-   //  }
+    if (type && users.length < 1) {
+      throw new Error("No users found");
+    }
 
     res.status(200).send(users);
   } catch (error: any) {
