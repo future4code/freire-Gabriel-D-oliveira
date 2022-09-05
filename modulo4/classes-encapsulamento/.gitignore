@@ -4,3 +4,4 @@ build
 .env
 requests.rest
 queries.sql
+package-lock.json
