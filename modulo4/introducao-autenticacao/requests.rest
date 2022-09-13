@@ -1,0 +1,34 @@
+
+POST http://localhost:3003/user/signup
+Content-Type: application/json
+
+{
+   "email": "super@regular.com.br" ,
+   "password": "Not so super"
+}
+
+###
+
+Post http://localhost:3003/NewUser
+Content-Type: application/json
+
+{
+   "email": "Bigbang@universe.com.br" ,
+   "password": "MakingTheUniverse"
+}
+
+###
+
+POST http://localhost:3003/user/login
+Content-Type: application/json
+
+{
+   "email": "Bigbang@universe.com.br" ,
+   "password": "MakingTheUniverse"
+}
+
+###
+
+GET http://localhost:3003/user/profile
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6ImI1ZmYyNDYxLTk4MDEtNDRhOC04NzdiLWUyZjA3NDQ3YzVlNyIsImVtYWlsIjoiQmlnYmFuZ0B1bml2ZXJzZS5jb20uYnIiLCJwYXNzd29yZCI6Ik1ha2luZ1RoZVVuaXZlcnNlIn0sImlhdCI6MTY2MzAzMDk3MiwiZXhwIjoxNjYzMDMyMTcyfQ.qe3adibIq7krZjBG2D99anzHKZXVTS4MB7DVODmxtNM
