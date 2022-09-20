@@ -1,0 +1,29 @@
+
+
+POST http://localhost:3003/user/signup
+Content-Type: application/json
+
+{
+   "name": "Luke Skywalker", 
+   "nickname": "Last Hope", 
+   "email": "jediforever@email.com" ,
+   "password": "imyourson",
+   "role": "NORMAL"
+}
+
+###
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRmNjI1YmZiLTI0OWYtNGY1Zi04MWMzLTdlNjQzMWU0YzU0YyIsInJvbGUiOiJOT1JNQUwiLCJpYXQiOjE2NjMwOTc1NzIsImV4cCI6MTY2MzE4Mzk3Mn0.dmmKZkyN7CsNPI4tdW4cbS5-C2nJNbRExuTzTTkuqBI
+
+GET  http://localhost:3003/user/profile
+Content-Type: application/json
+Authorization: {{token}}
+
+###
+POST http://localhost:3003/user/login
+Content-Type: application/json
+
+{
+   "email": "jediforever@email.com",
+   "password": "imyourson"
+}
