@@ -1,0 +1,15 @@
+POST http://localhost:3003/users
+Content-Type: application/json 
+
+{
+    "name": "Night King",
+    "email": "winterhere@gmail.com",
+    "password": "freeze"
+} 
+
+### 
+
+GET http://localhost:3003/users
+
+###
+
