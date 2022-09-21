@@ -1,0 +1,36 @@
+### Endpoint de teste
+GET http://localhost:3003/ping
+
+### 1) Signup
+POST http://localhost:3003/users/signup
+Content-Type: application/json
+
+{
+    "nome": "Pudge",
+    "email": "meathook@gmail.com",
+    "password": "FreshMeat",
+    "role": "ADMIN"
+}
+
+### 2) Login
+POST http://localhost:3003/users/login
+Content-Type: application/json
+
+{
+    "email": "wisdom@gmail.com",
+    "password": "exortfire"
+    
+}
+
+### 3) Get users
+GET http://localhost:3003/users/profiles
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjllYTJhZDgzLTJkYWMtNDliMC1iMDM0LTBjMGY3MDhlMjhmMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MzYzODY4NiwiZXhwIjoxNjYzNzI1MDg2fQ.NgpJizIUN8cs9n0yUeedjaTG2sgKEyTdcWCv5KDzPJY
+
+### 4) Delete user
+DELETE  http://localhost:3003/users/delete
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjllYTJhZDgzLTJkYWMtNDliMC1iMDM0LTBjMGY3MDhlMjhmMSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY2MzYzODY4NiwiZXhwIjoxNjYzNzI1MDg2fQ.NgpJizIUN8cs9n0yUeedjaTG2sgKEyTdcWCv5KDzPJY
+Content-Type: application/json
+
+{
+    "userId": "f03017bb-2c08-4cdc-bb63-7fbd7cebe01f" 
+}
