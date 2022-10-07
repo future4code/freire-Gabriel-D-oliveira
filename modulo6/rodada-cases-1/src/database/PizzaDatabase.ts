@@ -1,85 +1,50 @@
-import { IShowDB, ITicketDB, Show } from "../models/Show"
-import { BaseDatabase } from "./BaseDatabase"
+import { IGetOrderOutputDTO } from "../models/Order";
+import {
+  IIngredientsDB,
+  IPizzaDB,
+  IPizzaIngredientsDB,
+  Pizza,
+} from "../models/Pizza";
+import { BaseDatabase } from "./BaseDatabase";
 
-export class ShowDatabase extends BaseDatabase {
-    public static TABLE_SHOWS = "Lama_Shows"
-    public static TABLE_TICKETS = "Lama_Tickets"
+export class PizzaDatabase extends BaseDatabase {
+  public static TABLE_PIZZAS = "Amb_Shows";
+  public static TABLE_INGREDIENTS = "Amb_Ingredients";
+  public static TABLE_PIZZAS_INGREDIENTS = "Amb_Pizzas_Ingredients";
 
-    public toShowDBModel = (show: Show): IShowDB => {
-        const showDB: IShowDB = {
-            id: show.getId(),
-            band: show.getBand(),
-            starts_at: show.getStartsAt()
-        }
+  public toPizzaDBModel = (pizza: Pizza): IPizzaDB => {
+    const pizzaDB: IPizzaDB = {
+      name: pizza.getName(),
+      price: pizza.getPrice(),
+    };
 
-        return showDB
-    }
+    return pizzaDB;
+  };
 
-    public findShowByDate = async (date: Date): Promise<IShowDB | undefined> => {
-        const result: IShowDB[] = await BaseDatabase
-            .connection(ShowDatabase.TABLE_SHOWS)
-            .select()
-            .where({ starts_at: date })
+  public getPizzas = async (): Promise<IPizzaDB[]> => {
+    const result: IPizzaDB[] = await BaseDatabase.connection(
+      PizzaDatabase.TABLE_PIZZAS_INGREDIENTS
+    ).select();
 
-        return result[0]
-    }
+    return result;
+  };
 
-    public createShow = async (show: Show): Promise<void> => {
-        const showDB = this.toShowDBModel(show)
+  public getIngredients = async (pizzaName: string): Promise<string[]> => {
+    const result: IPizzaIngredientsDB[] = await BaseDatabase.connection(
+      PizzaDatabase.TABLE_PIZZAS_INGREDIENTS
+    )
+      .select("ingredient_name")
+      .where({ pizza_name: pizzaName });
 
-        await BaseDatabase
-            .connection(ShowDatabase.TABLE_SHOWS)
-            .insert(showDB)
-    }
+    return result.map((pizza) => pizza.ingredient_name);
+  };
 
-    public getShows = async (): Promise<IShowDB[]> => {
-        const result: IShowDB[] = await BaseDatabase
-            .connection(ShowDatabase.TABLE_SHOWS)
-            .select()
+  public getPizzaFormatted = async (): Promise<any> => {
+    const [result] = await BaseDatabase.connection.raw(`
+    SELECT * FROM Amb_Pizzas
+    JOIN Amb_Pizzas_Ingredients ON Amb_Pizzas_Ingredients.pizza_name = Amb_Pizzas.name
+    `);
 
-        return result
-    }
-
-    public getTicketsByShowId = async (showId: string): Promise<number> => {
-        const result: IShowDB[] = await BaseDatabase
-            .connection(ShowDatabase.TABLE_TICKETS)
-            .select()
-            .where({ show_id: showId })
-
-        return result.length
-    }
-
-    public findShowById = async (showId: string): Promise<IShowDB | undefined> => {
-        const result: IShowDB[] = await BaseDatabase
-            .connection(ShowDatabase.TABLE_SHOWS)
-            .select()
-            .where({ id: showId })
-
-        return result[0]
-    }
-
-    public findTicket = async (showId: string, userId: string): Promise<ITicketDB | undefined> => {
-        const result: ITicketDB[] = await BaseDatabase
-            .connection(ShowDatabase.TABLE_TICKETS)
-            .select()
-            .where({
-                show_id: showId,
-                user_id: userId
-            })
-
-        return result[0]
-    }
-
-    public createTicket = async (ticketDB: ITicketDB): Promise<void> => {
-        await BaseDatabase
-            .connection(ShowDatabase.TABLE_TICKETS)
-            .insert(ticketDB)
-    }
-
-    public deleteTicketById = async (ticketId: string): Promise<void> => {
-        await BaseDatabase
-            .connection(ShowDatabase.TABLE_TICKETS)
-            .delete()
-            .where({ id: ticketId })
-    }
+    return result;
+  };
 }

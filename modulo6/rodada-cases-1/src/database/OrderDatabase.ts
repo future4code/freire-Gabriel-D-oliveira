@@ -1,35 +1,35 @@
-import { IUserDB, User } from "../models/User"
-import { BaseDatabase } from "./BaseDatabase"
+import { IGetOrderOutputDTO, IOrderDB, IOrderItemDB } from "../models/Order";
+import { BaseDatabase } from "./BaseDatabase";
+import { PizzaDatabase } from "./PizzaDatabase";
 
-export class UserDatabase extends BaseDatabase {
-    public static TABLE_USERS = "Lama_Users"
+export class OrderDatabase extends BaseDatabase {
+  public static TABLE_ORDERS = "Amb_Orders";
+  public static TABLE_ORDERS_ITENS = "Amb_Orders_itens";
 
-    public toUserDBModel = (user: User): IUserDB => {
-        const userDB: IUserDB = {
-            id: user.getId(),
-            name: user.getName(),
-            email: user.getEmail(),
-            password: user.getPassword(),
-            role: user.getRole()
-        }
+  public createOrder = async (orderId: string): Promise<void> => {
+    await BaseDatabase.connection(OrderDatabase.TABLE_ORDERS).insert({
+      id: orderId,
+    });
+  };
 
-        return userDB
-    }
+  public insertItemOrder = async (orderItem: IOrderItemDB): Promise<void> => {
+    await BaseDatabase.connection(OrderDatabase.TABLE_ORDERS_ITENS).insert(
+      orderItem
+    );
+  };
 
-    public findByEmail = async (email: string): Promise<IUserDB | undefined> => {
-        const result: IUserDB[] = await BaseDatabase
-            .connection(UserDatabase.TABLE_USERS)
-            .select()
-            .where({ email })
+  public getOrders = async (): Promise<IOrderDB[]> => {
+    const result: IOrderDB[] = await BaseDatabase.connection(
+      OrderDatabase.TABLE_ORDERS
+    ).select();
+    return result;
+  };
 
-        return result[0]
-    }
-
-    public createUser = async (user: User): Promise<void> => {
-        const userDB = this.toUserDBModel(user)
-
-        await BaseDatabase
-            .connection(UserDatabase.TABLE_USERS)
-            .insert(userDB)
-    }
+  public getPrice = async(pizzaName: string): Promise<number | undefined> =>{
+    const result:any[] = await BaseDatabase.connection(PizzaDatabase.TABLE_PIZZAS).
+    select("price").
+    where({name: pizzaName})
+    return result[0].price as number
+    
+  }
 }
