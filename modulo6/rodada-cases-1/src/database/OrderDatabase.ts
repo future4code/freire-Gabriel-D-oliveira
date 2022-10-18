@@ -25,11 +25,22 @@ export class OrderDatabase extends BaseDatabase {
     return result;
   };
 
-  public getPrice = async(pizzaName: string): Promise<number | undefined> =>{
-    const result:any[] = await BaseDatabase.connection(PizzaDatabase.TABLE_PIZZAS).
-    select("price").
-    where({name: pizzaName})
-    return result[0].price as number
-    
-  }
+  public getPrice = async (pizzaName: string): Promise<number | undefined> => {
+    const result: any[] = await BaseDatabase.connection(
+      PizzaDatabase.TABLE_PIZZAS
+    )
+      .select("price")
+      .where({ name: pizzaName });
+    return result[0].price as number;
+  };
+
+  public getOrderItem = async (orderId: string): Promise<IOrderItemDB[]> => {
+    const result: IOrderItemDB[] = await BaseDatabase.connection(
+      OrderDatabase.TABLE_ORDERS_ITENS
+    )
+      .select()
+      .where({ order_id: orderId });
+
+    return result;
+  };
 }

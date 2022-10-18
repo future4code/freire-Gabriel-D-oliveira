@@ -4,7 +4,7 @@ export interface IOrderDB {
 
 export interface IOrderItemDB {
     id: string,
-    pizza_id: string,
+    pizza_name: string,
     quantity: number,
     order_id: string
 }
@@ -79,7 +79,7 @@ export interface ICreateOrderInputDTO {
     }[]
 }
 
-export interface CreateOrderOutputDTO {
+export interface ICreateOrderOutputDTO {
     message: string,
     order: IOrderResume
 }

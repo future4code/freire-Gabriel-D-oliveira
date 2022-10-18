@@ -1,136 +1,112 @@
-import { UserDatabase } from "../database/UserDatabase"
-import { ConflictError } from "../errors/ConflictError"
-import { NotFoundError } from "../errors/NotFoundError"
-import { RequestError } from "../errors/RequestError"
-import { UnauthorizedError } from "../errors/UnauthorizedError"
-import { ILoginInputDTO, ILoginOutputDTO, ISignupInputDTO, ISignupOutputDTO, User, USER_ROLES } from "../models/User"
-import { Authenticator, ITokenPayload } from "../services/Authenticator"
-import { HashManager } from "../services/HashManager"
-import { IdGenerator } from "../services/IdGenerator"
+import { BaseDatabase } from "../database/BaseDatabase";
+import { OrderDatabase } from "../database/OrderDatabase";
+import { NotFoundError } from "../errors/NotFoundError";
+import { ParamsError } from "../errors/ParamsError";
+import {
+  ICreateOrderInputDTO,
+  ICreateOrderOutputDTO,
+  IGetOrderOutputDTO,
+  IOrderItemDB,
+  Order,
+} from "../models/Order";
+import { IdGenerator } from "../services/IdGenerator";
 
-export class UserBusiness {
-    constructor(
-        private userDatabase: UserDatabase,
-        private idGenerator: IdGenerator,
-        private hashManager: HashManager,
-        private authenticator: Authenticator
-    ) {}
+export class OrderBusinnes {
+  constructor(
+    private orderDatabase: OrderDatabase,
+    private idGenerator: IdGenerator
+  ) {}
 
-    public signup = async (input: ISignupInputDTO): Promise<ISignupOutputDTO> => {
-        const { name, email, password } = input
+  public createOrder = async (
+    input: ICreateOrderInputDTO
+  ): Promise<ICreateOrderOutputDTO> => {
+    const pizzasInput = input.pizzas;
 
-        if (typeof name !== "string") {
-            throw new RequestError("Parâmetro 'name' inválido: deve ser uma string")
-        }
-
-        if (typeof email !== "string") {
-            throw new RequestError("Parâmetro 'email' inválido: deve ser uma string")
-        }
-
-        if (typeof password !== "string") {
-            throw new RequestError("Parâmetro 'password' inválido: deve ser uma string")
-        }
-
-        if (name.length < 3) {
-            throw new RequestError("Parâmetro 'name' inválido: mínimo de 3 caracteres")
-        }
-
-        if (password.length < 6) {
-            throw new RequestError("Parâmetro 'password' inválido: mínimo de 6 caracteres")
-        }
-
-        if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-            throw new RequestError("Parâmetro 'email' inválido")
-        }
-
-        const isEmailAlreadyExists = await this.userDatabase.findByEmail(email)
-        
-        if (isEmailAlreadyExists) {
-            throw new ConflictError("Email já cadastrado")
-        }
-
-        const id = this.idGenerator.generate()
-        const hashedPassword = await this.hashManager.hash(password)
-
-        const user = new User(
-            id,
-            name,
-            email,
-            hashedPassword,
-            USER_ROLES.NORMAL
-        )
-
-        await this.userDatabase.createUser(user)
-
-        const payload: ITokenPayload = {
-            id: user.getId(),
-            role: user.getRole()
-        }
-
-        const token = this.authenticator.generateToken(payload)
-
-        const response: ISignupOutputDTO = {
-            message: "Cadastro realizado com sucesso",
-            token
-        }
-
-        return response
+    if (pizzasInput.length === 0) {
+      throw new ParamsError(
+        "Pedido em branco, favor informar ao menos uam pizza"
+      );
     }
 
-    public login = async (input: ILoginInputDTO): Promise<ILoginOutputDTO> => {
-        const { email, password } = input
+    const pizzas = pizzasInput.map((pizza) => {
+      if (pizza.quantity <= 0) {
+        throw new ParamsError("A quantidade mínima de pizzas é 1");
+      }
 
-        if (typeof email !== "string") {
-            throw new RequestError("Parâmetro 'email' inválido")
-        }
+      return {
+        ...pizza,
+        price: 0,
+      };
+    });
 
-        if (typeof password !== "string") {
-            throw new RequestError("Parâmetro 'password' inválido")
-        }
-
-        if (password.length < 6) {
-            throw new RequestError("Parâmetro 'password' inválido: mínimo de 6 caracteres")
-        }
-
-        if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-            throw new RequestError("Parâmetro 'email' inválido")
-        }
-
-        const userDB = await this.userDatabase.findByEmail(email)
-        
-        if (!userDB) {
-            throw new NotFoundError("Email não cadastrado")
-        }
-
-        const user = new User(
-            userDB.id,
-            userDB.name,
-            userDB.email,
-            userDB.password,
-            userDB.role
-        )
-
-        const isPasswordCorrect = await this.hashManager.compare(
-            password,
-            user.getPassword()
-        )
-
-        if (!isPasswordCorrect) {
-            throw new UnauthorizedError("Password incorreto")
-        }
-
-        const payload: ITokenPayload = {
-            id: user.getId(),
-            role: user.getRole()
-        }
-
-        const token = this.authenticator.generateToken(payload)
-
-        const response: ILoginOutputDTO = {
-            message: "Login realizado com sucesso",
-            token
-        }
-
-        return response
+    for (let pizza of pizzas) {
+      const price = await this.orderDatabase.getPrice(pizza.name);
+      if (!price) {
+        throw new NotFoundError("Pizza não encontrada");
+      }
+      pizza.price = price;
     }
+
+    const orderId = this.idGenerator.generate();
+    await this.orderDatabase.createOrder(orderId);
+
+    for (let pizza of pizzas) {
+      const orderItem: IOrderItemDB = {
+        id: this.idGenerator.generate(),
+        pizza_name: pizza.name,
+        quantity: pizza.quantity,
+        order_id: orderId,
+      };
+      await this.orderDatabase.insertItemOrder(orderItem);
+    }
+
+    const total = pizzas.reduce(
+      (prev, pizza) => prev + pizza.price * pizza.quantity,
+      0
+    );
+
+    const response: ICreateOrderOutputDTO = {
+      message: "Pedido realizado com sucesso",
+      order: {
+        id: orderId,
+        pizzas,
+        total,
+      },
+    };
+    return response;
+  };
+
+  public getOrders = async (): Promise<IGetOrderOutputDTO> => {
+    const ordersDB = await this.orderDatabase.getOrders();
+    const orders: Order[] = [];
+
+    for (let orderDB of ordersDB) {
+      const order = new Order(orderDB.id, []);
+
+      const orderItensDB: any = await this.orderDatabase.getOrderItem(
+        order.getId()
+      );
+
+      for (let orderItemDB of orderItensDB) {
+        const price = await this.orderDatabase.getPrice(orderItemDB.pizza_name);
+
+        orderItemDB.price = price;
+      }
+      order.setOrderItens(orderItensDB);
+      orders.push(order);
+    }
+
+    const response: IGetOrderOutputDTO = {
+      orders: orders.map((order) => ({
+        id: order.getId(),
+        pizzas: order.getOrderItems().map((item) => ({
+          name: item.pizza_name,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+        total: order.getTotal(),
+      })),
+    };
+    return response;
+  };
 }
